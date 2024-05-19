@@ -10,7 +10,7 @@ const RequestButton = ({ prompt, setPrompt, setList, seedValue, setLoading, load
             setList((list) => [...list, { content: e.target.value, role: "user" }])
             setLoading(true);
             setPrompt("");
-            await axios.post("http://localhost:3000/api/response", {
+            await axios.post("/api/response", {
                 prompt,
                 developerOptions,
                 seedValue
