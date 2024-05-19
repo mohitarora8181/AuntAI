@@ -28,6 +28,8 @@ export default async function handler(req, res) {
       stop:"</assistant>"
     });
 
+    console.log(data);
+
     res.json(data.choices[0]);
 
   } catch (err) {
