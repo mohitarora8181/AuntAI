@@ -6,6 +6,8 @@ export default async function handler(req, res) {
 
   const { prompt,developerOptions,seedValue } = req.body;
 
+  console.log(req.body);
+
   try {
     const { data } = await axios.post("https://cloud.olakrutrim.com/v1/chat/completions", {
       model: developerOptions.model,
