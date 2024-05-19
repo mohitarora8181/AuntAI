@@ -16,11 +16,11 @@ const ResponseElement = ({ list, session }) => {
         list.map((ele, index) => {
             return <>
                 {ele?.role == "assistant" && <img className='h-[40px] ml-8 rounded-full self-start -mb-12' src={process.env.NEXT_PUBLIC_RESPONSE_IMG}></img>}
-                <li className={`w-auto max-w-[60%] mx-[5rem] my-6 ${ele.role == "user" ? "self-end rounded-tr-sm" : "self-start rounded-tl-sm"} bg-[#dee0e2] rounded-xl`}
+                <li className={`w-auto max-w-[60%] mx-[5rem] my-6 ${ele?.role == "user" ? "self-end rounded-tr-sm" : "self-start rounded-tl-sm"} bg-[#dee0e2] rounded-xl`}
                     key={index}>
                     {
-                        (ele.content)?.includes("```") ?
-                            (ele.content.split("```")).map((codeEle, ind) => {
+                        (ele?.content)?.includes("```") ?
+                            (ele?.content.split("```")).map((codeEle, ind) => {
                                 if (SyntaxHighlighter.supportedLanguages.indexOf(codeEle.split("\n")[0]) > 0) {
                                     return (<div className="w-full flex flex-col">
                                         <CopyToClipboard onCopy={() => toast.success("Code copied successfully")}
@@ -44,18 +44,18 @@ const ResponseElement = ({ list, session }) => {
                                     );
                                 } else {
                                     return (
-                                        <Markdown key={"code" + ind} remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeFormat, rehypeRaw]} className={`p-3 text-wrap scrollbar-none overflow-x-scroll mx-5 px-2 my-1 rounded-lg rounded-tl-2xl rounded-br-2xl ${ele.role == "user" ? "text-end" : "text-start"}`}>
+                                        <Markdown key={"code" + ind} remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeFormat, rehypeRaw]} className={`p-3 text-wrap scrollbar-none overflow-x-scroll mx-5 px-2 my-1 rounded-lg rounded-tl-2xl rounded-br-2xl ${ele?.role == "user" ? "text-end" : "text-start"}`}>
                                             {codeEle}
                                         </Markdown>
                                     );
                                 }
                             }) :
-                            <Markdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeFormat, rehypeRaw]} className={`p-3 text-wrap scrollbar-none overflow-x-scroll mx-5 px-2 my-1 rounded-lg rounded-tl-2xl rounded-br-2xl ${ele.role == "user" ? "text-end" : "text-start"}`}>
-                                {ele.content}
+                            <Markdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeFormat, rehypeRaw]} className={`p-3 text-wrap scrollbar-none overflow-x-scroll mx-5 px-2 my-1 rounded-lg rounded-tl-2xl rounded-br-2xl ${ele?.role == "user" ? "text-end" : "text-start"}`}>
+                                {ele?.content}
                             </Markdown>
                     }
                 </li>
-                {ele.role == "user" && <img className='h-[40px] mr-8 mb-0 rounded-full self-end -mt-16' src={session?.user.image}></img>}
+                {ele?.role == "user" && <img className='h-[40px] mr-8 mb-0 rounded-full self-end -mt-16' src={session?.user.image}></img>}
             </>
         })
     )
