@@ -15,7 +15,7 @@ const ResponseElement = ({ list, session }) => {
     return (
         list.map((ele, index) => {
             return <>
-                {ele.role == "assistant" && <img className='h-[40px] ml-8 rounded-full self-start -mb-12' src={process.env.NEXT_PUBLIC_RESPONSE_IMG}></img>}
+                {ele?.role == "assistant" && <img className='h-[40px] ml-8 rounded-full self-start -mb-12' src={process.env.NEXT_PUBLIC_RESPONSE_IMG}></img>}
                 <li className={`w-auto max-w-[60%] mx-[5rem] my-6 ${ele.role == "user" ? "self-end rounded-tr-sm" : "self-start rounded-tl-sm"} bg-[#dee0e2] rounded-xl`}
                     key={index}>
                     {
