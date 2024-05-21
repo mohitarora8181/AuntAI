@@ -32,7 +32,7 @@ const DeveloperOptions = ({ open, setOpen, setDeveloperOptions }) => {
     }, [model, temperature, maxTokens, topP,topK, frequencyPenalty, presencePenalty])
 
     return (
-        <div className={`w-full ${open ? "block animate-slideInRight" : "animate-slideOut delay-75"} ${hide ? "hidden" : "block"} mb-3 mx-0 px-1 bg-white border border-gray-500 rounded-lg flex flex-col`}>
+        <div className={`w-full dark:text-black ${open ? "block animate-slideInRight" : "animate-slideOut delay-75"} ${hide ? "hidden" : "block"} mb-3 mx-0 px-1 bg-white border border-gray-500 rounded-lg flex flex-col`}>
             <FormControl className='w-[90%] self-center mt-5' sx={{ m: 2, minWidth: 120 }}>
                 <InputLabel id="demo-simple-select-helper-label">Select Model</InputLabel>
                 <Select onChange={(e) => { setModel(e.target.value) }} native defaultValue="gemini-pro" id="grouped-native-select" label="Select Model" labelId="demo-simple-select-helper-label">

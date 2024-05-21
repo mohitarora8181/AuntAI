@@ -54,7 +54,7 @@ const RequestButton = ({ prompt, setPrompt, setList, seedValue, setLoading, load
     return (
         <form className='flex justify-center absolute w-[78%] h-[6rem] bottom-4'>
             <div className='w-[95%] max-sm:px-3 p-5 flex justify-between align-middle'>
-                <textarea className={`border text-black disabled:bg-gray-50 placeholder-gray-400 scrollbar-none pr-16 border-black border-opacity-10 resize-none outline-none w-full p-3 pl-6 rounded-full align-middle shadow-lg shadow-gray-100 ${loading ? "cursor-none" : "cursor-text"}`}
+                <textarea className={`border text-black disabled:bg-gray-50 bg-white placeholder-gray-400 scrollbar-none pr-16 border-black border-opacity-10 resize-none outline-none w-full p-3 pl-6 rounded-full align-middle shadow-lg shadow-gray-100 ${loading ? "cursor-none" : "cursor-text"}`}
                     type='text'
                     value={prompt}
                     spellCheck

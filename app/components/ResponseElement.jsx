@@ -44,13 +44,13 @@ const ResponseElement = ({ list, session }) => {
                                     );
                                 } else {
                                     return (
-                                        <Markdown key={"code" + ind} remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeFormat, rehypeRaw]} className={`p-3 text-wrap scrollbar-none overflow-x-scroll mx-5 px-2 my-1 rounded-lg rounded-tl-2xl rounded-br-2xl ${ele?.role == "user" ? "text-end" : "text-start"}`}>
+                                        <Markdown key={"code" + ind} remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeFormat, rehypeRaw]} className={`p-3 text-wrap scrollbar-none overflow-x-scroll text-black dark:text-black mx-5 px-2 my-1 rounded-lg rounded-tl-2xl rounded-br-2xl ${ele?.role == "user" ? "text-end" : "text-start"}`}>
                                             {codeEle}
                                         </Markdown>
                                     );
                                 }
                             }) :
-                            <Markdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeFormat, rehypeRaw]} className={`p-3 text-wrap scrollbar-none overflow-x-scroll mx-5 px-2 my-1 rounded-lg rounded-tl-2xl rounded-br-2xl ${ele?.role == "user" ? "text-end" : "text-start"}`}>
+                            <Markdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeFormat, rehypeRaw]} className={`p-3 text-wrap scrollbar-none overflow-x-scroll mx-5 px-2 my-1 text-black dark:text-black rounded-lg rounded-tl-2xl rounded-br-2xl ${ele?.role == "user" ? "text-end" : "text-start"}`}>
                                 {ele?.content}
                             </Markdown>
                     }

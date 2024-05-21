@@ -3,13 +3,12 @@ import { FcGoogle } from "react-icons/fc";
 import { signIn, signOut } from 'next-auth/react';
 import DeveloperOptions from './DeveloperOptions';
 
-
 const SidePanel = ({ session, setDeveloperOptions }) => {
     const [open, setOpen] = useState(false);
 
     return (
         <div className='h-[98%] max-sm:hidden flex flex-col w-[22%] bg-gradient-radial overflow-hidden from-gray-200 to-white self-center shadow-xl rounded-tr-2xl rounded-br-2xl drop-shadow-sm justify-between'>
-            <div className='w-full p-5 flex justify-between'>
+            <div className='w-full p-5 flex justify-between dark:text-black'>
                 <img className='h-[40px] mr-8 rounded-full' src={session?.user.image}></img>
                 {session ?
                     <button onClick={() => signOut()} className='bg-gray-200 h-9 border flex gap-2 hover:border-indigo-500 transition-all hover:shadow-2xl p-4 py-1 rounded-full'>
