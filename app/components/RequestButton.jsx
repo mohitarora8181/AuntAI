@@ -1,23 +1,40 @@
 import { IoSend } from "react-icons/io5";
 import axios from 'axios';
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
-const RequestButton = ({ prompt, setPrompt, setList, seedValue, setLoading, loading ,developerOptions}) => {
+const RequestButton = ({ prompt, setPrompt, setList, seedValue, setLoading, loading, developerOptions }) => {
+
+    const [history, setHistory] = useState([]);
 
     const handleProcess = async (e) => {
         e.preventDefault();
         if (prompt) {
             setList((list) => [...list, { content: e.target.value, role: "user" }])
+            setHistory((history) => [...history, { role: "user", parts: [{ text: prompt }] }]);
             setLoading(true);
             setPrompt("");
-            await axios.post("/api/response", {
-                prompt,
-                developerOptions,
-                seedValue
-            }).then(({ data }) => {
-                setLoading(false);
-                setList((list) => [...list, data?.message]);
-            });
+
+            if (developerOptions.model.includes("gemini")) {
+                await axios.post("/api/gemini", {
+                    prompt,
+                    developerOptions,
+                    history
+                }).then(({ data }) => {
+                    setLoading(false);
+                    data && setHistory((history) => [...history, data]);
+                    setList((list) => [...list, { content: data ? data.parts[0].text : "", role: "assistant" }]);
+                })
+
+            } else {
+                await axios.post("/api/response", {
+                    prompt,
+                    developerOptions,
+                    seedValue
+                }).then(({ data }) => {
+                    setLoading(false);
+                    setList((list) => [...list, data?.message]);
+                });
+            }
         }
     }
 
@@ -30,9 +47,9 @@ const RequestButton = ({ prompt, setPrompt, setList, seedValue, setLoading, load
         }
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         (document.querySelector("textarea")).focus();
-    },[loading])
+    }, [loading])
 
     return (
         <form className='flex justify-center absolute w-[78%] h-[6rem] bottom-4'>

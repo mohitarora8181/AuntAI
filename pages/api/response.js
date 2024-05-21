@@ -6,8 +6,6 @@ export default async function handler(req, res) {
 
   const { prompt,developerOptions,seedValue } = req.body;
 
-  console.log(req.body);
-
   try {
     const { data } = await axios.post("https://cloud.olakrutrim.com/v1/chat/completions", {
       model: developerOptions.model,
@@ -27,9 +25,6 @@ export default async function handler(req, res) {
       top_p: developerOptions.top_p,
       stop:"</assistant>"
     });
-
-    console.log(data);
-
     res.json(data.choices[0]);
 
   } catch (err) {

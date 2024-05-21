@@ -23,7 +23,7 @@ const SidePanel = ({ session, setDeveloperOptions }) => {
             </div>
             <div className='mb-5 p-2'>
                 <DeveloperOptions open={open} setOpen={setOpen} setDeveloperOptions={setDeveloperOptions} />
-                <h6 onClick={() => { setOpen(!open) }} className={`text-sm select-none w-fit p-4 py-1 rounded-full text-gray-500 hover:text-black font-thin cursor-pointer border border-gray-400 transition-all hover:border-black ${open ? "bg-white text-black font-semibold w-full text-center" : "bg-transparent text-gray-500"}`}>{open ? "Close" : "Developer Options"}</h6>
+                <h6 onClick={() => { setOpen(!open) }} className={`text-sm select-none w-fit p-4 py-1 rounded-full text-gray-500 hover:text-black font-thin cursor-pointer border border-gray-400 transition-all hover:border-black ${open ? "bg-white text-black font-semibold w-full text-center" : "bg-transparent text-gray-500 mx-4"}`}>{open ? "Close" : "Developer Options"}</h6>
             </div>
         </div>
     )
