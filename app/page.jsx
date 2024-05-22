@@ -17,7 +17,7 @@ const page = () => {
   const [loading, setLoading] = useState(false);
   const [developerOptions, setDeveloperOptions] = useState()
 
-  const [openAnimation , setOpenAnimation] = useState(true);
+  const [openAnimation, setOpenAnimation] = useState(true);
 
   const containerRef = useRef();
 
@@ -32,9 +32,9 @@ const page = () => {
   }, [])
 
   return (<div className='w-full h-full flex'>
-    {openAnimation && <Loader/>}
     <SidePanel session={session} setDeveloperOptions={setDeveloperOptions} />
     <div className='h-full w-[78%] flex flex-col justify-end'>
+      {openAnimation && <Loader />}
       <div className={`w-full mt-5 overflow-y-scroll scrollbar-thin mb-24`}>
         <ul className="scroll-smooth flex flex-col" ref={containerRef}>
           <ResponseElement list={list} session={session} />
@@ -45,7 +45,7 @@ const page = () => {
           <ToastContainer autoClose={1000} hideProgressBar={true} pauseOnHover={false} />
         </ul>
       </div>
-      <RequestButton prompt={prompt} setPrompt={setPrompt} setList={setList} seedValue={seedValue} setLoading={setLoading} loading={loading} developerOptions={developerOptions} setOpenAnimation={setOpenAnimation}/>
+      <RequestButton prompt={prompt} setPrompt={setPrompt} setList={setList} seedValue={seedValue} setLoading={setLoading} loading={loading} developerOptions={developerOptions} setOpenAnimation={setOpenAnimation} />
     </div>
   </div>
   )

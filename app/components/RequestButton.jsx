@@ -7,6 +7,7 @@ const RequestButton = ({ prompt, setPrompt, setList, seedValue, setLoading, load
     const [history, setHistory] = useState([]);
 
     const handleProcess = async (e) => {
+        setOpenAnimation(false)
         e.preventDefault();
         if (prompt) {
             setList((list) => [...list, { content: e.target.value, role: "user" }])
@@ -54,7 +55,7 @@ const RequestButton = ({ prompt, setPrompt, setList, seedValue, setLoading, load
     useEffect(() => {
         setTimeout(() => {
             setOpenAnimation(false);
-        }, 1000)
+        }, 3000)
     }, []);
 
     return (
