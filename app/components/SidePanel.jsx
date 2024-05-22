@@ -19,15 +19,15 @@ const SidePanel = ({ session, setDeveloperOptions }) => {
     }, [])
 
     return (
-        <div className='h-[98%] dark:bg-gradient-to-br dark:from-[#2a2a2a] dark:to-gray-900 max-sm:hidden flex flex-col w-[22%] bg-gradient-radial overflow-hidden from-gray-200 to-white self-center shadow-xl rounded-tr-2xl rounded-br-2xl drop-shadow-sm justify-start'>
+        <div className='h-[98%] dark:bg-gradient-to-br dark:from-[#393939] dark:to-gray-800 dark:shadow-gray-600 max-sm:hidden flex flex-col w-[22%] bg-gradient-radial overflow-hidden from-gray-200 to-white self-center shadow-xl rounded-tr-2xl rounded-br-2xl drop-shadow-sm justify-start'>
             <div className='h-full w-full '>
-                <div className='w-full p-5 flex justify-between dark:text-black'>
+                <div className='w-full p-5 flex justify-between text-black dark:text-black'>
                     <img className='h-[40px] mr-8 rounded-full' src={session?.user.image}></img>
                     {session ?
-                        <button onClick={() => signOut()} className='bg-gray-200 h-9 border flex gap-2 hover:border-indigo-500 transition-all hover:shadow-2xl p-4 py-1 rounded-full'>
+                        <button onClick={() => signOut()} className='bg-gray-200 dark:text-black h-9 border flex gap-2 hover:border-indigo-500 transition-all hover:shadow-2xl p-4 py-1 rounded-full'>
                             Sign Out
                         </button> :
-                        <button onClick={() => signIn("google")} className='bg-gray-200 h-9 border flex gap-2 hover:border-indigo-500 transition-all hover:shadow-2xl p-4 py-1 rounded-full'>
+                        <button onClick={() => signIn("google")} className='bg-gray-200 dark:text-black h-9 border flex gap-2 hover:border-indigo-500 transition-all hover:shadow-2xl p-4 py-1 rounded-full'>
                             Sign In
                             <FcGoogle className='self-center size-5' />
                         </button>

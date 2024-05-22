@@ -6,6 +6,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import SidePanel from './components/SidePanel';
 
+import Loader from './components/Loader';
+
 import { useSession } from 'next-auth/react';
 
 const page = () => {
@@ -14,6 +16,8 @@ const page = () => {
   const [seedValue, setSeedValue] = useState(1234);
   const [loading, setLoading] = useState(false);
   const [developerOptions, setDeveloperOptions] = useState()
+
+  const [openAnimation , setOpenAnimation] = useState(true);
 
   const containerRef = useRef();
 
@@ -28,6 +32,7 @@ const page = () => {
   }, [])
 
   return (<div className='w-full h-full flex'>
+    {openAnimation && <Loader/>}
     <SidePanel session={session} setDeveloperOptions={setDeveloperOptions} />
     <div className='h-full w-[78%] flex flex-col justify-end'>
       <div className={`w-full mt-5 overflow-y-scroll scrollbar-thin mb-24`}>
@@ -40,7 +45,7 @@ const page = () => {
           <ToastContainer autoClose={1000} hideProgressBar={true} pauseOnHover={false} />
         </ul>
       </div>
-      <RequestButton prompt={prompt} setPrompt={setPrompt} setList={setList} seedValue={seedValue} setLoading={setLoading} loading={loading} developerOptions={developerOptions} />
+      <RequestButton prompt={prompt} setPrompt={setPrompt} setList={setList} seedValue={seedValue} setLoading={setLoading} loading={loading} developerOptions={developerOptions} setOpenAnimation={setOpenAnimation}/>
     </div>
   </div>
   )

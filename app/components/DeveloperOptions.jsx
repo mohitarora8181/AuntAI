@@ -32,7 +32,7 @@ const DeveloperOptions = ({ open, setOpen, setDeveloperOptions }) => {
     }, [model, temperature, maxTokens, topP,topK, frequencyPenalty, presencePenalty])
 
     return (
-        <div className={`w-full dark:text-black ${open ? "block animate-slideInRight" : "animate-slideOut delay-75"} ${hide ? "hidden" : "block"} mb-3 mx-0 px-1 bg-white border border-gray-500 rounded-lg flex flex-col`}>
+        <div className={`w-full text-black dark:text-black ${open ? "block animate-slideInRight" : "animate-slideOut delay-75"} ${hide ? "hidden" : "block"} mb-3 mx-0 px-1 bg-white border border-gray-500 rounded-lg flex flex-col`}>
             <FormControl className='w-[90%] self-center mt-5' sx={{ m: 2, minWidth: 120 }}>
                 <InputLabel id="demo-simple-select-helper-label">Select Model</InputLabel>
                 <Select onChange={(e) => { setModel(e.target.value) }} native defaultValue="gemini-pro" id="grouped-native-select" label="Select Model" labelId="demo-simple-select-helper-label">
@@ -47,7 +47,7 @@ const DeveloperOptions = ({ open, setOpen, setDeveloperOptions }) => {
                     </optgroup>
                 </Select>
             </FormControl>
-            <label className='w-full ml-5 m-2'>Temperature : <span className='m-1 font-bold'>{temperature}</span></label>
+            <label className='w-full ml-5 m-2 dark:text-black'>Temperature : <span className='m-1 font-bold'>{temperature}</span></label>
             <Box className="w-[90%] self-center">
                 <Slider
                     aria-label="Temperature"
@@ -58,7 +58,7 @@ const DeveloperOptions = ({ open, setOpen, setDeveloperOptions }) => {
                     sx={{ color: "black" }}
                 />
             </Box>
-            <label className='w-full ml-5 m-2'>Maximum Token : <span className='m-1 font-bold'>{maxTokens}</span></label>
+            <label className='w-full ml-5 m-2 dark:text-black'>Maximum Token : <span className='m-1 font-bold'>{maxTokens}</span></label>
             <Box className="w-[90%] self-center">
                 <Slider
                     aria-label="Max Token"
@@ -69,7 +69,7 @@ const DeveloperOptions = ({ open, setOpen, setDeveloperOptions }) => {
                     sx={{ color: "black" }}
                 />
             </Box>
-            <label className='w-full ml-5 m-2'>Top_P : <span className='m-1 font-bold'>{topP}</span></label>
+            <label className='w-full ml-5 m-2 dark:text-black'>Top_P : <span className='m-1 font-bold'>{topP}</span></label>
             <Box className="w-[90%] self-center">
                 <Slider
                     aria-label="Top_P"
@@ -83,7 +83,7 @@ const DeveloperOptions = ({ open, setOpen, setDeveloperOptions }) => {
             {
                 model.includes("gemini") ?
                     <>
-                        <label className='w-full ml-5 m-2'>Top_K : <span className='m-1 font-bold'>{topK}</span></label>
+                        <label className='w-full ml-5 m-2 dark:text-black'>Top_K : <span className='m-1 font-bold'>{topK}</span></label>
                         <Box className="w-[90%] self-center">
                             <Slider
                                 aria-label="Top_K"
@@ -98,7 +98,7 @@ const DeveloperOptions = ({ open, setOpen, setDeveloperOptions }) => {
                     </>
                     :
                     <>
-                        <label className='w-full ml-5 m-2'>Frequency Penalty : <span className='m-1 font-bold'>{frequencyPenalty}</span></label>
+                        <label className='w-full ml-5 m-2 dark:text-black'>Frequency Penalty : <span className='m-1 font-bold'>{frequencyPenalty}</span></label>
                         <Box className="w-[90%] self-center">
                             <Slider
                                 aria-label="Frequency Penalty"
@@ -110,7 +110,7 @@ const DeveloperOptions = ({ open, setOpen, setDeveloperOptions }) => {
                                 sx={{ color: "black" }}
                             />
                         </Box>
-                        <label className='w-full ml-5 m-2'>Presence Penalty : <span className='m-1 font-bold'>{presencePenalty}</span></label>
+                        <label className='w-full ml-5 m-2 dark:text-black'>Presence Penalty : <span className='m-1 font-bold'>{presencePenalty}</span></label>
                         <Box className="w-[90%] self-center mb-5">
                             <Slider
                                 aria-label="Presence Penalty"

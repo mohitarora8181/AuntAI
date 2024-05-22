@@ -2,7 +2,7 @@ import { IoSend } from "react-icons/io5";
 import axios from 'axios';
 import { useEffect, useState } from "react";
 
-const RequestButton = ({ prompt, setPrompt, setList, seedValue, setLoading, loading, developerOptions }) => {
+const RequestButton = ({ prompt, setPrompt, setList, seedValue, setLoading, loading, developerOptions, setOpenAnimation }) => {
 
     const [history, setHistory] = useState([]);
 
@@ -50,6 +50,12 @@ const RequestButton = ({ prompt, setPrompt, setList, seedValue, setLoading, load
     useEffect(() => {
         (document.querySelector("textarea")).focus();
     }, [loading])
+
+    useEffect(() => {
+        setTimeout(() => {
+            setOpenAnimation(false);
+        }, 1000)
+    }, []);
 
     return (
         <form className='flex justify-center absolute w-[78%] h-[6rem] bottom-4'>
