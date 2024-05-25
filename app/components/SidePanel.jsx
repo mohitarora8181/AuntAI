@@ -12,6 +12,7 @@ const SidePanel = ({ session, setDeveloperOptions }) => {
     const [open, setOpen] = useState(false);
     const [mounted, setMounted] = useState(false);
     const { theme, setTheme } = useTheme();
+    const [buttonClick , setButtonClick] = useState(false)
 
 
     useEffect(() => {
@@ -27,7 +28,7 @@ const SidePanel = ({ session, setDeveloperOptions }) => {
                         <button onClick={() => signOut()} className='bg-gray-200 dark:text-black h-9 border flex gap-2 hover:border-indigo-500 transition-all hover:shadow-2xl p-4 py-1 rounded-full'>
                             Sign Out
                         </button> :
-                        <button onClick={() => signIn("google")} className='bg-gray-200 dark:text-black h-9 border flex gap-2 hover:border-indigo-500 transition-all hover:shadow-2xl p-4 py-1 rounded-full'>
+                        <button disabled={buttonClick} onClick={() =>{ setButtonClick(true);signIn("google")}} className='bg-gray-200 dark:text-black h-9 border flex gap-2 hover:border-indigo-500 transition-all hover:shadow-2xl p-4 py-1 rounded-full disabled:cursor-wait disabled:opacity-50'>
                             Sign In
                             <FcGoogle className='self-center size-5' />
                         </button>
