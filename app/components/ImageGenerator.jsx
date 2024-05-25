@@ -26,7 +26,7 @@ const ImageGenerator = ({ isOpen, setGenOpen }) => {
         }
     };
 
-    axios.defaults.headers.common["Authorization"] = NEXT_PUBLIC_GETIMG_API_KEY;
+    axios.defaults.headers.common["Authorization"] = process.env.NEXT_PUBLIC_GETIMG_API_KEY;
 
     const handleGenerate = async () => {
         try {
