@@ -4,33 +4,46 @@ import { useEffect, useState } from "react";
 import { RiImageEditFill } from "react-icons/ri";
 import { Tooltip, IconButton } from "@mui/material";
 import ImageGenerator from "./ImageGenerator";
+import { firestore } from "@firebase";
+import { doc, setDoc } from "firebase/firestore";
+import { list } from "postcss";
 
 
-const RequestButton = ({ prompt, setPrompt, setList, seedValue, setLoading, loading, developerOptions, setOpenAnimation }) => {
+const RequestButton = ({ prompt, setPrompt, setList, seedValue, setLoading, loading, developerOptions, setOpenAnimation, session, chatID }) => {
 
     const [history, setHistory] = useState([]);
     const [genOpen, setGenOpen] = useState(false);
+
 
     const handleProcess = async (e) => {
         setOpenAnimation(false)
         e.preventDefault();
         if (prompt.trim() != "") {
             setList((list) => [...list, { content: e.target.value, role: "user" }])
+            storeinDB({ content: e.target.value, role: "user" });
             setHistory((history) => [...history, { role: "user", parts: [{ text: prompt }] }]);
             setLoading(true);
             setPrompt("");
 
-            if (developerOptions.model.includes("gemini")) {
-                await axios.post("/api/gemini", {
-                    prompt,
-                    developerOptions,
-                    history
-                }).then(({ data }) => {
-                    setLoading(false);
-                    data && setHistory((history) => [...history, data]);
-                    setList((list) => [...list, { content: data ? data.parts[0].text : "", role: "assistant" }]);
-                })
+            var responseContent = "";
 
+            if (developerOptions.model.includes("gemini")) {
+                try {
+                    await axios.post("/api/gemini", {
+                        prompt,
+                        developerOptions,
+                        history
+                    }).then(({ data }) => {
+                        setLoading(false);
+                        data && setHistory((history) => [...history, data]);
+                        setList((list) => [...list, { content: data.parts ? data.parts[0].text : "", role: "assistant" }]);
+                        responseContent = { content: data.parts ? data.parts[0].text : "", role: "assistant" };
+                    })
+                }
+                catch (err) {
+                    setLoading(false);
+                    console.log(err)
+                }
             } else {
                 await axios.post("/api/response", {
                     prompt,
@@ -39,8 +52,23 @@ const RequestButton = ({ prompt, setPrompt, setList, seedValue, setLoading, load
                 }).then(({ data }) => {
                     setLoading(false);
                     setList((list) => [...list, data?.message]);
+                    responseContent = data?.message;
                 });
             }
+            storeinDB(responseContent);
+        }
+    }
+
+    const storeinDB = async (listItem) => {
+        const time = new Date();
+        try {
+            const id = session?.user.auntID;
+            if (id) {
+                const document = doc(firestore, id.toString(), chatID);
+                await setDoc(document, { [time.getTime()]: listItem }, { merge: true })
+            }
+        } catch (error) {
+            console.log(error)
         }
     }
 
@@ -57,11 +85,11 @@ const RequestButton = ({ prompt, setPrompt, setList, seedValue, setLoading, load
         (document.querySelector("textarea")).focus();
     }, [loading])
 
-    useEffect(() => {
-        setTimeout(() => {
-            setOpenAnimation(false);
-        }, 2000)
-    }, []);
+    // useEffect(() => {
+    //     setTimeout(() => {
+    //         setOpenAnimation(false);
+    //     }, 500)
+    // }, []);
 
     return (
         <form className='flex justify-center absolute w-[78%] h-[6rem] bottom-4'>
