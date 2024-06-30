@@ -17,10 +17,9 @@ const RequestButton = ({ prompt, setPrompt, setList, seedValue, setLoading, load
 
     const handleProcess = async (e) => {
         setOpenAnimation(false)
-        e.preventDefault();
         if (prompt.trim() != "") {
-            setList((list) => [...list, { content: e.target.value, role: "user" }])
-            storeinDB({ content: e.target.value, role: "user" });
+            setList((list) => [...list, { content: e, role: "user" }])
+            storeinDB({ content: e, role: "user" });
             setHistory((history) => [...history, { role: "user", parts: [{ text: prompt }] }]);
             setLoading(true);
             setPrompt("");
@@ -77,7 +76,7 @@ const RequestButton = ({ prompt, setPrompt, setList, seedValue, setLoading, load
             return;
         }
         if (e.key === 'Enter' && !e.shiftKey) {
-            handleProcess(e);
+            handleProcess(e.target.value);
         }
     }
 
@@ -92,9 +91,9 @@ const RequestButton = ({ prompt, setPrompt, setList, seedValue, setLoading, load
     // }, []);
 
     return (
-        <form className='flex justify-center absolute w-[78%] h-[6rem] bottom-4'>
+        <form className='flex justify-center absolute w-[78%] max-sm:w-full h-[6rem] max-sm:h-[5rem] bottom-4 max-sm:bottom-0'>
             <ImageGenerator isOpen={genOpen} setGenOpen={setGenOpen} />
-            <div className='w-[95%] max-sm:px-3 p-5 flex justify-between align-middle'>
+            <div className='w-[95%] max-sm:w-full max-sm:p-3 p-5 flex justify-between align-middle'>
                 <textarea className={`border text-black disabled:bg-gray-50 bg-white placeholder-gray-400 scrollbar-none pr-16 border-black border-opacity-10 resize-none outline-none w-full p-3 pl-6 rounded-full align-middle shadow-lg dark:shadow-gray-900 shadow-gray-100 ${loading ? "cursor-none" : "cursor-text"}`}
                     type='text'
                     value={prompt}
@@ -104,12 +103,15 @@ const RequestButton = ({ prompt, setPrompt, setList, seedValue, setLoading, load
                     onKeyDown={handleKeypress}
                     disabled={loading}
                 ></textarea>
-                <div className={`${loading ? "px-0" : "px-3"} overflow-hidden self-center -ml-20 mx-2 w-[3rem] h-[3rem] max-sm:h-[2.5rem] max-sm:w-[2.5rem] cursor-pointer border-none rounded-full hover:opacity-50 flex justify-center gap-x-2`} onClick={handleProcess}>
-                    <button className={`text-2xl select-none ${prompt ? "block animate-slideIn" : "hidden"}`}>
+                <div className={`${loading ? "px-0" : "px-3"} overflow-hidden self-center -ml-20 mx-2 w-[3rem] h-[3rem] max-sm:h-[2.5rem] max-sm:w-[2.5rem] cursor-pointer border-none rounded-full hover:opacity-50 flex justify-center gap-x-2`}>
+                    <button onClick={(e) => {
+                        e.preventDefault();
+                        handleProcess(prompt)
+                    }} className={`text-2xl select-none ${prompt ? "block animate-slideIn" : "hidden"}`}>
                         <IoSend className='self-center text-gray-800 select-none -rotate-[30deg]' />
                     </button>
                     {!loading && <Tooltip title="Generate Image" placement="top" className={prompt ? "hidden" : "block"}>
-                        <IconButton onClick={() => setGenOpen(true)} className="cursor-pointer text-gray-600 size-10 mt-1">
+                        <IconButton onClick={() => setGenOpen(true)} className="cursor-pointer text-gray-600 max-sm:mt-0 size-10 mt-1">
                             <RiImageEditFill />
                         </IconButton>
                     </Tooltip>}

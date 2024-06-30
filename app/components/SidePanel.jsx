@@ -55,8 +55,8 @@ const SidePanel = ({ session, setDeveloperOptions, setList, setOpenAnimation, se
         await getDoc(docRef).then((snap) => {
             if (snap.exists()) {
                 reframeData(snap.data());
-                setOpenAnimation(false);
             }
+            setOpenAnimation(false);
         })
         localStorage.setItem("current-ChatID", item);
     }
@@ -114,12 +114,12 @@ const SidePanel = ({ session, setDeveloperOptions, setList, setOpenAnimation, se
                 </div>
                 <div className='flex flex-col w-full h-full'>
                     <div className='flex p-6 justify-between'>
-                        {session && <button className='p-1 px-3 border hover:border-indigo-600 hover:shadow-2xl bg-gray-200 text-black rounded-full' onClick={handleNewChat}>New Chat</button>}
+                        {session && <button className='p-1 px-3 border hover:border-indigo-600 hover:shadow-2xl bg-gray-200 text-black rounded-full transition-all' onClick={handleNewChat}>New Chat</button>}
                         {mounted && <button className='border p-1 px-1.5 dark:border-white border-black rounded-full' onClick={() => { if (theme === "dark") { setTheme("light"); } else { setTheme("dark"); } }}>{theme && theme === "light" ? <MdDarkMode size={20} color='black' /> : <LuSunMedium size={20} color='white' />}</button>}
                     </div>
                     <ul className='mb-10 overflow-y-scroll h-[69%] w-full scrollbar-thin transition-all'>
                         {prevList && session && prevList.map((item, index) => {
-                            return <li key={index} className={`m-3 transition-all flex flex-col text-black dark:text-white text-sm cursor-pointer rounded-xl border border-gray-400 p-5 ${(chatID == item) ? "bg-gray-300 dark:bg-gray-950" : "bg-inherit hover:bg-gray-200 dark:hover:bg-gray-900 dark:bg-gray-800"}`} onClick={() => { setList([]); setOpenAnimation(true); setChatID(item); handleGetUpdatedChat(item); }}>
+                            return <li key={index} className={`m-3 select-none transition-all flex flex-col text-black dark:text-white text-sm cursor-pointer rounded-xl border border-gray-400 p-5 ${(chatID == item) ? "bg-gray-300 dark:bg-gray-950" : "bg-inherit hover:bg-gray-200 dark:hover:bg-gray-900 dark:bg-gray-800"}`} onClick={() => { if (chatID == item) return; setList([]); setOpenAnimation(true); setChatID(item); handleGetUpdatedChat(item); }}>
                                 <h1 className='text-lg'>{item.split("*=*")[0]}</h1>
                                 <p className='text-sm self-end'>{item.split("*=*")[1]}</p>
                             </li>

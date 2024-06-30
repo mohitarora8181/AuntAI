@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react'
 
 const DeveloperOptions = ({ open, setOpen, setDeveloperOptions }) => {
 
-    const [model, setModel] = useState("Krutrim-spectre-v2");
+    const [model, setModel] = useState(process.env.NEXT_PUBLIC_DEFAULT_LLM || "gemini-pro");
     const [temperature, setTemperature] = useState();
     const [maxTokens, setMaxTokens] = useState();
     const [topP, setTopP] = useState();
@@ -54,7 +54,7 @@ const DeveloperOptions = ({ open, setOpen, setDeveloperOptions }) => {
                     defaultValue={0.90}
                     max={2}
                     step={0.01}
-                    // getAriaValueText={(value) => {setTemperature(value)}}
+                    getAriaValueText={(value) => {setTemperature(value)}}
                     sx={{ color: "black" }}
                 />
             </Box>
@@ -65,7 +65,7 @@ const DeveloperOptions = ({ open, setOpen, setDeveloperOptions }) => {
                     defaultValue={1000}
                     max={2048}
                     step={1}
-                    // getAriaValueText={(value) => {setMaxTokens(value)}}
+                    getAriaValueText={(value) => {setMaxTokens(value)}}
                     sx={{ color: "black" }}
                 />
             </Box>
@@ -76,7 +76,7 @@ const DeveloperOptions = ({ open, setOpen, setDeveloperOptions }) => {
                     defaultValue={0.90}
                     max={1}
                     step={0.01}
-                    // getAriaValueText={(value) => {setTopP(value)}}
+                    getAriaValueText={(value) => {setTopP(value)}}
                     sx={{ color: "black" }}
                 />
             </Box>
@@ -91,7 +91,7 @@ const DeveloperOptions = ({ open, setOpen, setDeveloperOptions }) => {
                                 max={3}
                                 min={0}
                                 step={0.1}
-                                // getAriaValueText={(value) => setTopK(value)}
+                                getAriaValueText={(value) => setTopK(value)}
                                 sx={{ color: "black" }}
                             />
                         </Box>
@@ -106,7 +106,7 @@ const DeveloperOptions = ({ open, setOpen, setDeveloperOptions }) => {
                                 max={2}
                                 min={-2}
                                 step={0.01}
-                                // getAriaValueText={(value) => setFrequencyPenalty(value)}
+                                getAriaValueText={(value) => setFrequencyPenalty(value)}
                                 sx={{ color: "black" }}
                             />
                         </Box>
@@ -118,7 +118,7 @@ const DeveloperOptions = ({ open, setOpen, setDeveloperOptions }) => {
                                 max={2}
                                 min={-2}
                                 step={0.01}
-                                // getAriaValueText={(value) => setPresencePenalty(value)}
+                                getAriaValueText={(value) => setPresencePenalty(value)}
                                 sx={{ color: "black" }}
                             />
                         </Box>
