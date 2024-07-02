@@ -27,7 +27,7 @@ const ImageGenerator = ({ isOpen, setGenOpen }) => {
     };
 
     // axios.defaults.headers.common["Authorization"] = process.env.NEXT_PUBLIC_GETIMG_API_KEY;
-    axios.defaults.headers.common["authorization"] = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiZTMwMmU3NzQtMGY2ZS00NTQyLWEzOWMtYTA4MzM0YjBiNDczIiwidHlwZSI6ImZyb250X2FwaV90b2tlbiJ9.WwttepeeWzY9_2CSuhWiWHp4eoeeWXlcKakal1HDfO0";
+    axios.defaults.headers.common["authorization"] = process.env.NEXT_PUBLIC_GETIMG_API_KEY;
 
     const handleGenerate = async () => {
         try {
