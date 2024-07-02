@@ -11,7 +11,7 @@ import { doc, getDoc, setDoc, getDocs, collection } from "firebase/firestore";
 import { v1 as uuidv1 } from "uuid";
 
 
-const SidePanel = ({ session, setDeveloperOptions, setList, setOpenAnimation, setChatID, chatID }) => {
+const SidePanel = ({ session, setDeveloperOptions, setList, setOpenAnimation, setChatID, chatID, openSideMob, setOpenSideMob }) => {
     const [open, setOpen] = useState(false);
     const [mounted, setMounted] = useState(false);
     const { theme, setTheme } = useTheme();
@@ -97,10 +97,24 @@ const SidePanel = ({ session, setDeveloperOptions, setList, setOpenAnimation, se
         setOpenAnimation(false)
     }
 
+
+    const [hide, setHide] = useState(true);
+
+    useEffect(() => {
+        if (!openSideMob) {
+            setTimeout(() => {
+                setHide(true);
+            }, 200);
+        } else {
+            setHide(false)
+        }
+    }, [openSideMob])
+
     return (
-        <div className='h-[98%] dark:bg-gradient-to-br dark:from-[#393939] dark:to-gray-800 dark:shadow-gray-600 max-sm:hidden flex flex-col w-[22%] bg-gradient-radial overflow-hidden from-gray-200 to-white self-center shadow-xl rounded-tr-2xl rounded-br-2xl drop-shadow-sm justify-start'>
-            <div className='h-full w-full '>
-                <div className='w-full p-5 flex justify-between text-black dark:text-black'>
+        <div className={`h-[98%] max-sm:bottom-2 max-sm:w-[98%] max-sm:absolute max-sm:z-[500202] dark:bg-gradient-to-br dark:from-[#393939] dark:to-gray-800 dark:shadow-gray-600 flex flex-col w-[22%] bg-gradient-radial overflow-hidden from-gray-200 to-white self-center shadow-xl rounded-tr-2xl rounded-br-2xl drop-shadow-sm justify-start transition-all ${openSideMob ? "block max-sm:animate-slideInRight" : "max-sm:animate-slideOut delay-75"} ${hide ? "max-sm:hidden" : "block"}`}>
+
+            <div className='h-full w-full max-sm:h-[90%]'>
+                <div className='w-full p-5 flex justify-between max-sm:justify-end text-black dark:text-black'>
                     <img className='h-[40px] mr-8 rounded-full' src={session?.user.image}></img>
                     {session ?
                         <button onClick={() => signOut()} className='bg-gray-200 dark:text-black h-9 border flex gap-2 hover:border-indigo-500 select-none transition-all hover:shadow-2xl p-4 py-1 rounded-full'>
