@@ -26,16 +26,20 @@ const ImageGenerator = ({ isOpen, setGenOpen }) => {
         }
     };
 
-    axios.defaults.headers.common["Authorization"] = process.env.NEXT_PUBLIC_GETIMG_API_KEY;
+    // axios.defaults.headers.common["Authorization"] = process.env.NEXT_PUBLIC_GETIMG_API_KEY;
+    axios.defaults.headers.common["authorization"] = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiZTMwMmU3NzQtMGY2ZS00NTQyLWEzOWMtYTA4MzM0YjBiNDczIiwidHlwZSI6ImZyb250X2FwaV90b2tlbiJ9.WwttepeeWzY9_2CSuhWiWHp4eoeeWXlcKakal1HDfO0";
 
     const handleGenerate = async () => {
         try {
             if (prompt.trim() != "") {
                 setLoading(true)
-                await axios.post("https://api.getimg.ai/v1/essential/text-to-image", {
-                    prompt
+                await axios.post("https://api.edenai.run/v2/image/generation", {
+                    text:prompt,
+                    providers:"replicate",
+                    num_images:1,
+                    resolution:"512X512"
                 }).then(({ data }) => {
-                    setBase64(data.image)
+                    setBase64(data.replicate.items[0])
                 })
             } else {
                 alert("Please write appropriate prompt")
@@ -62,7 +66,7 @@ const ImageGenerator = ({ isOpen, setGenOpen }) => {
                         Let's write some meaningful prompt to generate a customized image
                     </DialogContentText>
                     {loading && <dotlottie-player src="animations/square_loader.json" background="transparent" speed="1" style={{ width: "60%", height: "60%" , marginLeft : "20%"}} loop autoplay></dotlottie-player>}
-                    {base64 && <img className=' select-none' src={`data:image/jpg;base64,` + base64}></img>}
+                    {base64 && <img className=' select-none' src={base64.image_resource_url}></img>}
                     <TextField autoFocus spellCheck value={prompt} onChange={(e) => setPrompt(e.target.value)} className='my-5' fullWidth label="Enter prompt here" color='secondary' id="fullWidth" focused />
                 </DialogContent>
                 <DialogActions>

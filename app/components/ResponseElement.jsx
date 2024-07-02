@@ -13,26 +13,27 @@ import { toast } from "react-toastify";
 import { RxSpeakerLoud } from "react-icons/rx";
 import { useEffect, useState } from "react";
 
-const ResponseElement = ({ list, session,chatID }) => {
+const ResponseElement = ({ list, session, chatID }) => {
 
     const [isPlaying, setisPlaying] = useState(false);
     const [currentPlayingIndex, setcurrentPlayingIndex] = useState(null);
-    const [voice, setVoice] = useState();
+    // const [voice, setVoice] = useState();
 
     const handleRead = (text) => {
         const synth = window.speechSynthesis;
         setisPlaying(true);
         const utterence = new SpeechSynthesisUtterance(text.replaceAll("</assistant>", ""));
-        if (voice) {
-            utterence.voice = voice;
-            synth.speak(utterence);
-        } else {
-            setTimeout(() => {
-                setVoice(synth.getVoices()[12]);
-                utterence.voice = synth.getVoices()[12];
-                synth.speak(utterence);
-            }, 1000);
-        }
+        synth.speak(utterence);
+        // if (voice) {
+        //     utterence.voice = voice;
+        //     synth.speak(utterence);
+        // } else {
+        //     setTimeout(() => {
+        //         setVoice(synth.getVoices()[12]);
+        //         utterence.voice = synth.getVoices()[12];
+        //         synth.speak(utterence);
+        //     }, 1000);
+        // }
         utterence.onend = () => {
             setisPlaying(false)
         }
