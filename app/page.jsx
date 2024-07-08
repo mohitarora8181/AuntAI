@@ -59,7 +59,7 @@ const page = () => {
       <div className={`w-full mt-5 overflow-y-scroll scrollbar-thin mb-28 max-sm:mb-20`}>
         <ul className="scroll-smooth flex flex-col" ref={containerRef}>
           <ResponseElement list={list} session={session} chatID={chatID}/>
-          {loading && <li className={`w-auto max-w-[60%] max-h-32 mx-[5rem] my-3 self-start bg-[#dee0e2] rounded-xl animate-pulse overflow-hidden`}
+          {loading && <li className={`w-auto max-w-[60%] max-h-32 mx-[5rem] max-sm:mx-[3rem] my-3 self-start bg-[#dee0e2] rounded-xl animate-pulse overflow-hidden`}
             key={"Loader"}>
             <dotlottie-player src="animations/response_loader.json" background="transparent" speed="1" style={{ height: "300px", width: "300px", marginTop: "-70px" }} loop autoplay></dotlottie-player>
           </li>}

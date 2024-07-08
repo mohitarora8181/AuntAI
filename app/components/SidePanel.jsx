@@ -49,6 +49,7 @@ const SidePanel = ({ session, setDeveloperOptions, setList, setOpenAnimation, se
 
 
     const handleGetUpdatedChat = async (item) => {
+        setOpenSideMob(false);
         setChatID(item)
         setList([])
         const docRef = doc(firestore, unicode.toString(), item);
@@ -87,6 +88,7 @@ const SidePanel = ({ session, setDeveloperOptions, setList, setOpenAnimation, se
     }, [session])
 
     const handleNewChat = () => {
+        setOpenSideMob(false);
         setOpenAnimation(true);
         const date = new Date();
         const unid = (date.toDateString() + "*=*" + date.toLocaleTimeString() + "*=*" + uuidv1());
