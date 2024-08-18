@@ -40,7 +40,7 @@ const DeveloperOptions = ({ open, setOpen, setDeveloperOptions }) => {
                     <optgroup label='Gemini'>
                         <option value='gemini-pro'>Gemini Pro</option>
                     </optgroup>
-                    <optgroup label="Krutrim ( works on localhost )">
+                    <optgroup label="Krutrim Ola">
                         <option value={"Krutrim-spectre-v2"}>Krutrim-spectre-v2</option>
                         <option value={"Meta-Llama-3-8B-Instruct"}>Meta-Llama-3-8B-Instruct</option>
                         <option value={"Mistral-7B-Instruct"}>Mistral-7B-Instruct</option>
