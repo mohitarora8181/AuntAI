@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react'
 
 const DeveloperOptions = ({ open, setOpen, setDeveloperOptions }) => {
 
-    const [model, setModel] = useState(process.env.NEXT_PUBLIC_DEFAULT_LLM || "gemini-pro");
+    const [model, setModel] = useState(process.env.NEXT_PUBLIC_DEFAULT_LLM || "gemini-1.5-flash");
     const [temperature, setTemperature] = useState();
     const [maxTokens, setMaxTokens] = useState();
     const [topP, setTopP] = useState();
@@ -38,7 +38,7 @@ const DeveloperOptions = ({ open, setOpen, setDeveloperOptions }) => {
                 <Select onChange={(e) => { setModel(e.target.value) }} native defaultValue={model} id="grouped-native-select" label="Select Model" labelId="demo-simple-select-helper-label">
                     <option aria-label="None" value="" />
                     <optgroup label='Gemini'>
-                        <option value='gemini-pro'>Gemini Pro</option>
+                        <option value='gemini-1.5-flash'>Gemini Pro</option>
                     </optgroup>
                     <optgroup label="Krutrim ( works on localhost )">
                         <option value={"Krutrim-spectre-v2"}>Krutrim-spectre-v2</option>
