@@ -13,7 +13,6 @@ const RequestButton = ({ prompt, setPrompt, setList, seedValue, setLoading, load
     const [history, setHistory] = useState([]);
     const [genOpen, setGenOpen] = useState(false);
 
-
     const handleProcess = async (e) => {
         setOpenAnimation(false)
         if (prompt.trim() != "") {
@@ -24,36 +23,23 @@ const RequestButton = ({ prompt, setPrompt, setList, seedValue, setLoading, load
             setPrompt("");
 
             var responseContent = "";
-
-            if (developerOptions.model.includes("gemini")) {
-                try {
-                    await axios.post("/api/gemini", {
-                        prompt,
-                        developerOptions,
-                        history
-                    }).then(({ data }) => {
-                        setLoading(false);
-                        if (data.parts) {
-                            setHistory((history) => [...history, data]);
-                            setList((list) => [...list, { content: data.parts ? data.parts[0].text : "", role: "model" }]);
-                            responseContent = { content: data.parts ? data.parts[0].text : "", role: "model" };
-                        }
-                    })
-                }
-                catch (err) {
-                    setLoading(false);
-                    console.log(err)
-                }
-            } else {
-                await axios.post("/api/response", {
+            try {
+                await axios.post(developerOptions?.provider == "groq" ? "/api/groq" : "/api/gemini", {
                     prompt,
                     developerOptions,
-                    seedValue
+                    history
                 }).then(({ data }) => {
                     setLoading(false);
-                    setList((list) => [...list, data?.message]);
-                    responseContent = data?.message;
+                    if (data.parts) {
+                        setHistory((history) => [...history, data]);
+                        setList((list) => [...list, { content: data.parts ? data.parts[0].text : "", role: "model" }]);
+                        responseContent = { content: data.parts ? data.parts[0].text : "", role: "model" };
+                    }
                 });
+            }
+            catch (err) {
+                setLoading(false);
+                console.log(err)
             }
             storeinDB(responseContent);
         }

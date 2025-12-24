@@ -1,6 +1,4 @@
 import { Box, FormControl, InputLabel, Select, Slider } from '@mui/material'
-import axios from '@node_modules/axios';
-
 import React, { useEffect, useState } from 'react'
 
 
@@ -13,20 +11,109 @@ const DeveloperOptions = ({ open, setOpen, setDeveloperOptions }) => {
     const [topK, setTopK] = useState();
     const [frequencyPenalty, setFrequencyPenalty] = useState();
     const [presencePenalty, setPresencePenalty] = useState();
-    const [modelList, setModelList] = useState([]);
+    const [provider, setProvider] = useState("gemini");
+    const [modelList, setModelList] = useState([
+        {
+            "provider": "gemini",
+            "models": [
+                {
+                    "name": "models/gemini-2.5-flash",
+                    "displayName": "Gemini 2.5 Flash"
+                },
+                {
+                    "name": "models/gemini-flash-latest",
+                    "displayName": "Gemini Flash Latest"
+                },
+                {
+                    "name": "models/gemini-flash-lite-latest",
+                    "displayName": "Gemini Flash-Lite Latest"
+                },
+                {
+                    "name": "models/gemini-2.5-flash-lite",
+                    "displayName": "Gemini 2.5 Flash-Lite"
+                },
+                {
+                    "name": "models/gemma-3-1b-it",
+                    "displayName": "Gemma 3 1B"
+                },
+                {
+                    "name": "models/gemma-3-4b-it",
+                    "displayName": "Gemma 3 4B"
+                },
+                {
+                    "name": "models/gemma-3-12b-it",
+                    "displayName": "Gemma 3 12B"
+                },
+                {
+                    "name": "models/gemma-3-27b-it",
+                    "displayName": "Gemma 3 27B"
+                },
+                {
+                    "name": "models/gemma-3n-e2b-it",
+                    "displayName": "Gemma 3n E2B"
+                },
+                {
+                    "name": "models/gemma-3n-e4b-it",
+                    "displayName": "Gemma 3n E4B"
+                }
+            ],
+        }, {
+            "provider": "groq",
+            "models": [
+                {
+                    "name": "groq/compound-mini",
+                    "displayName": "Groq (groq/compound-mini)"
+                },
+                {
+                    "name": "llama-3.1-8b-instant",
+                    "displayName": "Meta (llama-3.1-8b-instant)"
+                },
+                {
+                    "name": "llama-3.3-70b-versatile",
+                    "displayName": "Meta (llama-3.3-70b-versatile)"
+                },
+                {
+                    "name": "meta-llama/llama-4-maverick-17b-128e-instruct",
+                    "displayName": "Meta (meta-llama/llama-4-maverick-17b-128e-instruct)"
+                },
+                {
+                    "name": "qwen/qwen3-32b",
+                    "displayName": "Alibaba Cloud (qwen/qwen3-32b)"
+                },
+                {
+                    "name": "moonshotai/kimi-k2-instruct",
+                    "displayName": "Moonshot AI (moonshotai/kimi-k2-instruct)"
+                },
+                {
+                    "name": "moonshotai/kimi-k2-instruct-0905",
+                    "displayName": "Moonshot AI (moonshotai/kimi-k2-instruct-0905)"
+                },
+                {
+                    "name": "meta-llama/llama-4-scout-17b-16e-instruct",
+                    "displayName": "Meta (meta-llama/llama-4-scout-17b-16e-instruct)"
+                },
+                {
+                    "name": "openai/gpt-oss-120b",
+                    "displayName": "OpenAI (openai/gpt-oss-120b)"
+                },
+                {
+                    "name": "openai/gpt-oss-20b",
+                    "displayName": "OpenAI (openai/gpt-oss-20b)"
+                },
+                {
+                    "name": "groq/compound",
+                    "displayName": "Groq (groq/compound)"
+                },
 
-    useEffect(() => {
-        const fetchGeminiModels = async () => {
-            await axios.get("/api/gemini").then(({ data }) => {
-                setModelList(data?.models);
-                setModel(data?.models.filter(m => m.name == "models/gemini-2.5-flash"));
-            })
-        }
+                {
+                    "name": "allam-2-7b",
+                    "displayName": "SDAIA (allam-2-7b)"
+                },
 
-        if (modelList?.length == 0) {
-            fetchGeminiModels();
+            ]
         }
-    }, [])
+    ]);
+
 
     const [hide, setHide] = useState(true);
 
@@ -40,29 +127,27 @@ const DeveloperOptions = ({ open, setOpen, setDeveloperOptions }) => {
         }
     }, [open])
 
-
     useEffect(() => {
-        setDeveloperOptions({ model, temperature, maxTokens, topP, frequencyPenalty, presencePenalty });
+        setDeveloperOptions({ model, temperature, maxTokens, topP, frequencyPenalty, presencePenalty, provider });
     }, [model, temperature, maxTokens, topP, topK, frequencyPenalty, presencePenalty])
 
     return (
         <div className={`w-full text-black dark:text-black ${open ? "block animate-slideInRight" : "animate-slideOut delay-75"} ${hide ? "hidden" : "block"} mb-3 px-1 bg-white border border-gray-500 rounded-lg flex flex-col`}>
             <FormControl className='w-[90%] self-center mt-5' sx={{ m: 2, minWidth: 120 }}>
                 <InputLabel id="demo-simple-select-helper-label">Select Model</InputLabel>
-                <Select onChange={(e) => { setModel(e.target.value) }} native defaultValue={model} id="grouped-native-select" label="Select Model" labelId="demo-simple-select-helper-label">
+                <Select onChange={(e) => { setModel(e.target.value); setProvider(e.target.options[e.target.selectedIndex].getAttribute("provider")) }} native value={model} id="grouped-native-select" label="Select Model" labelId="demo-simple-select-helper-label">
                     <option aria-label="None" value="" />
-                    <optgroup label='Gemini'>
-                        {
-                            modelList?.map(obj => {
-                                return <option value={obj?.name}>{obj?.displayName}</option>
-                            })
-                        }
-                    </optgroup>
-                    <optgroup label="Krutrim ( works on localhost )">
-                        <option value={"Krutrim-spectre-v2"}>Krutrim-spectre-v2</option>
-                        <option value={"Meta-Llama-3-8B-Instruct"}>Meta-Llama-3-8B-Instruct</option>
-                        <option value={"Mistral-7B-Instruct"}>Mistral-7B-Instruct</option>
-                    </optgroup>
+                    {
+                        modelList?.map((provider, index) => (
+                            <optgroup key={index} label={provider.provider.charAt(0).toUpperCase() + provider.provider.slice(1)}>
+                                {
+                                    provider.models?.map((modelObj, idx) => (
+                                        <option key={idx} value={modelObj?.name} provider={provider.provider}>{modelObj?.displayName}</option>
+                                    ))
+                                }
+                            </optgroup>
+                        ))
+                    }
                 </Select>
             </FormControl>
             <label className='w-full ml-5 m-2 dark:text-black'>Temperature : <span className='m-1 font-bold'>{temperature}</span></label>
