@@ -19,6 +19,7 @@ const DeveloperOptions = ({ open, setOpen, setDeveloperOptions }) => {
         const fetchGeminiModels = async () => {
             await axios.get("/api/gemini").then(({ data }) => {
                 setModelList(data?.models);
+                setModel(data?.models.filter(m => m.name == "models/gemini-2.5-flash"));
             })
         }
 
