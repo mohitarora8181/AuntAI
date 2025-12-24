@@ -6,7 +6,6 @@ import { Tooltip, IconButton } from "@mui/material";
 import ImageGenerator from "./ImageGenerator";
 import { firestore } from "@firebase";
 import { doc, setDoc } from "firebase/firestore";
-import { list } from "postcss";
 
 
 const RequestButton = ({ prompt, setPrompt, setList, seedValue, setLoading, loading, developerOptions, setOpenAnimation, session, chatID }) => {
@@ -34,9 +33,11 @@ const RequestButton = ({ prompt, setPrompt, setList, seedValue, setLoading, load
                         history
                     }).then(({ data }) => {
                         setLoading(false);
-                        data && setHistory((history) => [...history, data]);
-                        setList((list) => [...list, { content: data.parts ? data.parts[0].text : "", role: "assistant" }]);
-                        responseContent = { content: data.parts ? data.parts[0].text : "", role: "assistant" };
+                        if (data.parts) {
+                            setHistory((history) => [...history, data]);
+                            setList((list) => [...list, { content: data.parts ? data.parts[0].text : "", role: "model" }]);
+                            responseContent = { content: data.parts ? data.parts[0].text : "", role: "model" };
+                        }
                     })
                 }
                 catch (err) {

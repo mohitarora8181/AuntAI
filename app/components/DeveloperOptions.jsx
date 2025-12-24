@@ -1,18 +1,31 @@
 import { Box, FormControl, InputLabel, Select, Slider } from '@mui/material'
+import axios from '@node_modules/axios';
 
 import React, { useEffect, useState } from 'react'
 
 
 const DeveloperOptions = ({ open, setOpen, setDeveloperOptions }) => {
 
-    const [model, setModel] = useState(process.env.NEXT_PUBLIC_DEFAULT_LLM || "gemini-1.5-flash");
+    const [model, setModel] = useState("models/gemini-2.5-flash");
     const [temperature, setTemperature] = useState();
     const [maxTokens, setMaxTokens] = useState();
     const [topP, setTopP] = useState();
     const [topK, setTopK] = useState();
     const [frequencyPenalty, setFrequencyPenalty] = useState();
     const [presencePenalty, setPresencePenalty] = useState();
+    const [modelList, setModelList] = useState([]);
 
+    useEffect(() => {
+        const fetchGeminiModels = async () => {
+            await axios.get("/api/gemini").then(({ data }) => {
+                setModelList(data?.models);
+            })
+        }
+
+        if (modelList?.length == 0) {
+            fetchGeminiModels();
+        }
+    }, [])
 
     const [hide, setHide] = useState(true);
 
@@ -29,7 +42,7 @@ const DeveloperOptions = ({ open, setOpen, setDeveloperOptions }) => {
 
     useEffect(() => {
         setDeveloperOptions({ model, temperature, maxTokens, topP, frequencyPenalty, presencePenalty });
-    }, [model, temperature, maxTokens, topP,topK, frequencyPenalty, presencePenalty])
+    }, [model, temperature, maxTokens, topP, topK, frequencyPenalty, presencePenalty])
 
     return (
         <div className={`w-full text-black dark:text-black ${open ? "block animate-slideInRight" : "animate-slideOut delay-75"} ${hide ? "hidden" : "block"} mb-3 px-1 bg-white border border-gray-500 rounded-lg flex flex-col`}>
@@ -38,7 +51,11 @@ const DeveloperOptions = ({ open, setOpen, setDeveloperOptions }) => {
                 <Select onChange={(e) => { setModel(e.target.value) }} native defaultValue={model} id="grouped-native-select" label="Select Model" labelId="demo-simple-select-helper-label">
                     <option aria-label="None" value="" />
                     <optgroup label='Gemini'>
-                        <option value='gemini-1.5-flash'>Gemini Pro</option>
+                        {
+                            modelList?.map(obj => {
+                                return <option value={obj?.name}>{obj?.displayName}</option>
+                            })
+                        }
                     </optgroup>
                     <optgroup label="Krutrim ( works on localhost )">
                         <option value={"Krutrim-spectre-v2"}>Krutrim-spectre-v2</option>
@@ -54,7 +71,7 @@ const DeveloperOptions = ({ open, setOpen, setDeveloperOptions }) => {
                     defaultValue={0.90}
                     max={2}
                     step={0.01}
-                    getAriaValueText={(value) => {setTemperature(value)}}
+                    getAriaValueText={(value) => { setTemperature(value) }}
                     sx={{ color: "black" }}
                 />
             </Box>
@@ -65,7 +82,7 @@ const DeveloperOptions = ({ open, setOpen, setDeveloperOptions }) => {
                     defaultValue={1000}
                     max={2048}
                     step={1}
-                    getAriaValueText={(value) => {setMaxTokens(value)}}
+                    getAriaValueText={(value) => { setMaxTokens(value) }}
                     sx={{ color: "black" }}
                 />
             </Box>
@@ -76,7 +93,7 @@ const DeveloperOptions = ({ open, setOpen, setDeveloperOptions }) => {
                     defaultValue={0.90}
                     max={1}
                     step={0.01}
-                    getAriaValueText={(value) => {setTopP(value)}}
+                    getAriaValueText={(value) => { setTopP(value) }}
                     sx={{ color: "black" }}
                 />
             </Box>
